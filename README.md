@@ -20,8 +20,8 @@ Physikalische Schallplatten sind out, wir nutzen jetzt digitale Schallplatten! E
 Dieses Mal ist es etwas schwieriger, falls es aber trotzdem mehrere korrekte Einsendungen gibt, dann entscheidet die Eleganz der Lösung, exotic der Programmiersprache und danach meine subjektive Einschätzung.
 
 Schnellstart
-Und als Quickstart für die Java-Entwickler unter euch ein Maven-Projekt mit einer kleinen App: https://github.com/CanardSauvage/mate-challenge.git
-Und für JS-Entwickler hier der direkte Link um das Bild schnell zu laden: https://raw.githubusercontent.com/CanardSauvage/mate-challenge/master/src/main/resources/vinyl.png
+- Und als Quickstart für die Java-Entwickler unter euch ein Maven-Projekt mit einer kleinen App: https://github.com/CanardSauvage/mate-challenge.git
+- Und für JS-Entwickler hier der direkte Link um das Bild schnell zu laden: https://raw.githubusercontent.com/CanardSauvage/mate-challenge/master/src/main/resources/vinyl.png
 
 Tipps
 -----
