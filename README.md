@@ -34,7 +34,7 @@ Tipps
 Tipps2
 ------
 
-Wie spiele ich eine binäre Audiodatei mit Java ab?
+- Wie spiele ich eine binäre Audiodatei mit Java ab?
 
 ```
 public static void playSound(byte[] buffer) {
@@ -49,4 +49,10 @@ public static void playSound(byte[] buffer) {
         throw new RuntimeException(e.getMessage(), e);
     }
 }
+```
+
+- Wie sieht der Anfang des binären Files in Hexadezimal aus?
+
+```
+80 80 7f 7f 80 80 80 7f 80 80 7f 7f 80 7f 7f 80 7f 80 7f 7f 80 7f 80 7f 7f 7f 80 80 7f 80 7f 80
 ```
