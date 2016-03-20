@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- cf. Binary Data in the Browser: http://www.html5rocks.com/en/tutorials/webgl/typed_arrays-->
+
+    <script>
+
+        function createSoundController() {
+            var soundController = {};
+
+            soundController.speakerContext = function () {
+                // Create a instance of AudioContext interface
+                window.AudioContext = window.AudioContext
+                        || window.webkitAudioContext
+                        || window.mozAudioContext;
+
+                return new AudioContext();
+            }();
+            // soundController.source = soundController.speakerContext.createBufferSource();
+
+            soundController.nextTime = 0;
+            var audioCache = [];
+
+            soundController.playCache = function (cache) {
+                while (cache.length) {
+                    var source = soundController.speakerContext.createBufferSource();
+                    source.buffer = cache.shift();
+                    source.connect(soundController.speakerContext.destination);
+                    source.start(soundController.nextTime);
+                }
+            };
+
+            // This one converts a Uint8Array to Float32Array
+            var convertBlock = function (incomingData) { // incoming data is a UInt8Array
+                var i, l = incomingData.length;
+                var outputData = new Float32Array(incomingData.length);
+                for (i = 0; i < l; i++) {
+                    outputData[i] = (incomingData[i] - 128) / 128.0;
+                }
+                return outputData;
+            };
+
+            // Data should be ArrayBuffer
+            soundController.playFile = function (data) {
+                console.info("playFile");
+
+                // Uint8Array, because our binary data is 8 bit
+                var preArray = new Uint8Array(data);
+
+                // Float32Array, because WebAudioApi wants this!
+                var array = convertBlock(preArray);
+
+                var buffer = soundController.speakerContext.createBuffer(1, array.length, 4000);
+                buffer.copyToChannel(array, 0);
+
+                audioCache.push(buffer);
+                soundController.playCache(audioCache);
+            };
+
+            soundController.playCache = function (cache) {
+                console.info("Play cache!");
+                while (cache.length) {
+                    var buffer = cache.shift();
+                    var source = soundController.speakerContext.createBufferSource();
+                    source.buffer = buffer;
+                    source.connect(soundController.speakerContext.destination);
+                    if (soundController.nextTime == 0) {
+                        // add a delay of 0.05 seconds
+                        soundController.nextTime = soundController.speakerContext.currentTime + 0.05;
+                    }
+                    source.start(soundController.nextTime);
+                    // schedule buffers to be played consecutively
+                    soundController.nextTime += source.buffer.duration;
+                }
+            };
+
+            return soundController;
+        }
+
+        function playAudio() {
+            var soundController = createSoundController();
+
+            var request = new XMLHttpRequest();
+            request.open('GET', 'turndownfornotch.bin', true);
+            request.responseType = 'arraybuffer'; //This asks the browser to populate the retrieved binary data in a array buffer
+            request.onload = function () {
+                soundController.playFile(request.response);
+            };
+            request.send();
+        }
+
+        function createCanvasWithImage() {
+            var img = document.getElementById('my-image');
+            var canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+
+            canvas.nextPoint = function (point, lastPoint) {
+                var allNeighbours = canvas.getAllNeighbours(point);
+                for (var i = 0; i < allNeighbours.length; i++) {
+                    var possiblePoint = allNeighbours[i];
+                    var pixelData = canvas.getPixel(possiblePoint);
+                    if ((pixelData[0] != 0) && ((possiblePoint.x != lastPoint.x) || (possiblePoint.y != lastPoint.y) )) {
+                        return allNeighbours[i];
+                    }
+                }
+                return undefined;
+            };
+
+            canvas.getAllNeighbours = function (point) {
+                return [neighbour(point, -1, -1), neighbour(point, 0, -1), neighbour(point, 1, -1),
+                    neighbour(point, -1, 0), /* that's me :) */ neighbour(point, 1, 0),
+                    neighbour(point, -1, 1), neighbour(point, 0, 1), neighbour(point, 1, 1)];
+            };
+
+            function neighbour(point, offsetX, offsetY) {
+                return {x: point.x + offsetX, y: point.y + offsetY};
+            }
+
+            canvas.getPixel = function (point) {
+                return canvas.getContext('2d').getImageData(point.x, point.y, 1, 1).data;
+            };
+
+            return canvas;
+        }
+
+        function loadImage() {
+            var soundController = createSoundController();
+            var canvas = createCanvasWithImage();
+            var data = [];
+
+            var nextPixel = {x: 251, y: 128};
+            var lastPixel = {x: 0, y: 0};
+
+            while (nextPixel) {
+                var pixelData = canvas.getPixel(nextPixel);
+                data.push(pixelData);
+
+
+                var newPixel = canvas.nextPoint(nextPixel, lastPixel);
+                // console.info(newPixel);
+                lastPixel = nextPixel;
+                nextPixel = newPixel;
+            }
+
+            var builder = '';
+            for (var i = 0; i < allNeighbours.length; i++) {
+                builder.append(String.format("%02x", buffer[i] & 0xFF)).append(" ");
+                if ((i + 1) % 32 == 0) {
+                    hexString = yourNumber.toString(16);
+                    builder.append("\n");
+                }
+            }
+
+            soundController.playFile(data);
+
+            console.info("Finished");
+        }
+
+
+    </script>
+</head>
+<body>
+<!-- HINT: If you load the image from another server you will get cross-domain-policy errors -->
+<img id="my-image" src="vinyl.png"/>
+<button onclick="loadImage()" type="button">
+    PLAY AUDIO
+</button>
+</body>
+</html>
