@@ -1,7 +1,8 @@
 package de.axelspringer.ideas.mate.five;
 
+import lombok.SneakyThrows;
+
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class HexPrinter {
 
@@ -24,7 +25,8 @@ public class HexPrinter {
         System.out.println(String.format(baseMail, counter));
     }
 
-    public static String sha1(String input) throws NoSuchAlgorithmException {
+    @SneakyThrows
+    public static String sha1(String input) {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
         byte[] result = mDigest.digest(input.getBytes());
         StringBuffer sb = new StringBuffer();
