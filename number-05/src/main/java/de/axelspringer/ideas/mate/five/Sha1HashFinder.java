@@ -3,14 +3,14 @@ package de.axelspringer.ideas.mate.five;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class HexPrinter {
+public class Sha1HashFinder {
 
     public static void main(String[] args) throws Exception {
         // example+1899634@example.com | sha1sum
-        String baseMail = "barriwaschi+%d@gmail.com";
+        String baseMail = "example+%d@example.com";
         String hash = "";
         long counter = 0;
-        while (!hash.startsWith("c0ffee")) {
+        while (!hash.startsWith("a51dea5")) {
             counter++;
             hash = sha1(String.format(baseMail, counter));
             if (counter % 1_000_000 == 0) {

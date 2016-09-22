@@ -1,6 +1,6 @@
 package de.axelspringer.ideas.mate.five.challenges;
 
-import de.axelspringer.ideas.mate.five.util.Files;
+import de.axelspringer.ideas.mate.five.util.Views;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,27 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class YouNeedToPost {
-
-    @RequestMapping(path = "/", method = {RequestMethod.PUT, RequestMethod.POST})
-    public String one(HttpServletRequest httpServletRequest) {
-        if (hasNoContentLength(httpServletRequest)) {
-            return Files.fromClasspath("one_error.html");
-        }
-//    Challenge 2:What's in a name?
-//            ==============================
-//
-//    Instructions:
-//    POST your
-//    "name"
-//
-//    What's in a name? that which we call a Sebastian
-//    By any
-//    other name
-//    would code
-//    as fast;
-//
-//    Challenge 2Complete!!
-//            ----------------------
+    public static void main(String[] args) {
 
         String value = "Challenge 3: Is it worth it? Let me work it.\n" +
                 "=============================================\n" +
@@ -73,12 +53,38 @@ public class YouNeedToPost {
                 "\n" +
                 "Look for challenge 4 at barriwaschi+8418162@gmail.com...";
 
-        return value;
+
+        // FIXME Remove System.out
+        System.out.println(value);
     }
 
-        private boolean hasNoContentLength(HttpServletRequest httpServletRequest) {
-                return true;
+    @RequestMapping(path = "/", method = {RequestMethod.PUT, RequestMethod.POST})
+    public String one(HttpServletRequest httpServletRequest) {
+        if (hasNoContentLength(httpServletRequest)) {
+            return Views.fromClasspath("one_error.html");
         }
+//    Challenge 2:What's in a name?
+//            ==============================
+//
+//    Instructions:
+//    POST your
+//    "name"
+//
+//    What's in a name? that which we call a Sebastian
+//    By any
+//    other name
+//    would code
+//    as fast;
+//
+//    Challenge 2Complete!!
+//            ----------------------
+
+        return "";
+    }
+
+    private boolean hasNoContentLength(HttpServletRequest httpServletRequest) {
+        return true;
+    }
 
 
 //    Woohooo!Challenge 1Complete!
