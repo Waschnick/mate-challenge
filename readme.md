@@ -10,3 +10,6 @@ curl -X POST -vk --header "Content-length: 0" --form "name=Sebastian"  localhost
 # Challenge 4: ???
 
 # Challenge 5: Hashing & Hash-Collision
+
+https://github.com/chjj/marked
+https://highlightjs.org/

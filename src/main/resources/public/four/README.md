@@ -11,7 +11,7 @@ Das Problem
 
 Physikalische Schallplatten sind out, wir nutzen jetzt digitale Schallplatten! Eure Aufgabe, solltet ihr die Challenge akzeptieren, besteht darin, eine Anwendung zum Abspielen der Schallplatte zu entwickeln. Ja wirklich: Die Rillen auf dem Bild enthalten rohe Audiodaten aus einem Song.
 
-![Vinyl](https://raw.githubusercontent.com/CanardSauvage/mate-challenge/master/src/main/resources/vinyl.png)
+![Vinyl](vinyl.png)
 
 
 - Baut eine Anwendung, die die Schallplatte abspielen kann!
