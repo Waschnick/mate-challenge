@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,27 +21,34 @@ import java.util.Enumeration;
 @RequestMapping(path = "/five")
 public class ChallengeController {
 
-    @RequestMapping(path = "/")
+    @RequestMapping(path = {"", "/"})
     public String zero() {
         return Views.fromClasspath("five/zero.html");
     }
 
     @RequestMapping(
-            path = "/",
+            path = {"", "/"},
             method = {RequestMethod.PUT, RequestMethod.POST},
             consumes = {MediaType.ALL_VALUE}
     )
-    public String one(HttpServletRequest httpServletRequest,
+    public String oneAndTwo(HttpServletRequest httpServletRequest,
                       @RequestBody(required = false) String body) {
 
-        log.info("body: " + body);
         if (StringUtils.isBlank(body)) {
+            log.info("Found Body: " + body);
+
             if (hasNoContentLength(httpServletRequest)) {
-                return Views.fromClasspath("five/one_error.html");
+                return Views.fromClasspath("five/two_error.html");
             }
+            return Views.fromClasspath("five/two.html");
         }
 
         return Views.fromClasspath("five/one.html");
+    }
+
+    @RequestMapping(path = "/cheesecake/{key}")
+    public String five(@PathVariable String key) {
+        return Views.fromClasspath("five/five.html");
     }
 
     private boolean hasNoContentLength(HttpServletRequest httpServletRequest) {
@@ -51,6 +59,7 @@ public class ChallengeController {
                 return false;
             }
         }
+        log.info("No content length!");
         return true;
     }
 

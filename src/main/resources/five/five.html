@@ -1,6 +1,53 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+    <title>Error 411 (Length Required)!!1</title>
+</head>
+
+<body>
 <pre>
 Challenge 5: When stars collide
 ===============================
 
+Java hat eine tolle Hash-Function, um Strings zu hashen. Leider
+gibt es dafür nur 2^32 mögliche Kombinationen. Das ist nicht viel.
+Und führt zu spannenden Phänomenen: Was passiert, wenn zwei unterschiedliche
+Strings den gleichen Hash haben?
+
+# Ein int, bitte!
+<code>
+public int hashCode() {
+  int h = hash;
+  if (h == 0 && value.length > 0) {
+    char val[] = value;
+
+    for (int i = 0; i < value.length; i++) {
+      h = 31 * h + val[i];
+    }
+    hash = h;
+  }
+  return h;
+}
+</code>
+
+# Give me some JavaScript!
+<code>
+String.prototype.hashCode = function() {
+  var hash = 0;
+  if (this.length == 0) {
+    return hash;
+  }
+  for (i = 0; i < this.length; i++) {
+    char = this.charCodeAt(i);
+	hash = ((hash<<5)-hash)+char;
+	hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+</code>
 
 </pre>
+</body>
+</html>
