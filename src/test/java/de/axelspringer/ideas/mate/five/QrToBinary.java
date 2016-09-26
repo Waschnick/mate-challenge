@@ -1,7 +1,5 @@
 package de.axelspringer.ideas.mate.five;
 
-import javafx.scene.paint.Color;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -98,7 +96,7 @@ public class QrToBinary {
             String line = lines[i];
             char[] chars = line.toCharArray();
             for (int j = 0; j < chars.length; j++) {
-                int color = chars[j] == '1' ? Color.WHITE.hashCode() : 0xFF000000;
+                int color = chars[j] == '1' ? 0xFFFFFFFF : 0xFF000000;
                 bufferedImage.setRGB(j, i, color);
             }
         }
