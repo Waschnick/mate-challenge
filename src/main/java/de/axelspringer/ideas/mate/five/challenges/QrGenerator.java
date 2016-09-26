@@ -13,9 +13,9 @@ import java.io.File;
 import java.net.URI;
 
 public class QrGenerator {
-    public static void main(String[] args) throws Exception {
-        new QrGenerator().generateQRCode_general("http://localhost/asdf/1234/qwerty");
-    }
+//    public static void main(String[] args) throws Exception {
+//        new QrGenerator().generateQRCode_general("http://localhost/asdf/1234/qwerty");
+//    }
 
     @SneakyThrows
     private void generateQRCode_general(String data) throws WriterException {
