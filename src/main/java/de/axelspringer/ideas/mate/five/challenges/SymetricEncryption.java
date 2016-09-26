@@ -9,8 +9,6 @@ import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Arrays;
 
@@ -32,12 +30,13 @@ public class SymetricEncryption {
         final byte[] encValue = c.doFinal(valueToEncrypt.getBytes());
         encryptedVal = new BASE64Encoder().encode(encValue);
 
-        return URLEncoder.encode(encryptedVal, "UTF-8");
+        return encode(encryptedVal);
     }
+
 
     @SneakyThrows
     public String decrypt(String encryptedValue) {
-        encryptedValue = URLDecoder.decode(encryptedValue, "UTF-8");
+        encryptedValue = decode(encryptedValue);
 
         String decryptedValue = null;
 
@@ -49,6 +48,14 @@ public class SymetricEncryption {
         decryptedValue = new String(decValue);
 
         return decryptedValue;
+    }
+
+    private String encode(String value) {
+        return value.replaceAll("\\+", "-").replaceAll("/", "_");
+    }
+
+    private String decode(String value) {
+        return value.replaceAll("-", "\\+").replaceAll("_", "/");
     }
 
     private Key generateKeyFromString(final String secKey) throws Exception {

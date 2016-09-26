@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,9 @@ import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static de.axelspringer.ideas.mate.five.util.Sha1.sha1;
 
@@ -31,6 +34,9 @@ public class ChallengeController {
 
     @Autowired
     private QrGenerator qrGenerator;
+
+    @Autowired
+    private SymetricEncryption symetricEncryption;
 
     @RequestMapping(path = {"", "/"})
     public String zero() {
@@ -100,10 +106,68 @@ public class ChallengeController {
         return result;
     }
 
+    @SneakyThrows
     @RequestMapping(path = "/cheesecake/{key}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
     public String five(@PathVariable String key) {
         log.info("Called last challenge with key: " + key);
-        return Views.fromClasspath("five/five.html", new Views.ViewParameter("key", key));
+        if (isValidKey(key)) {
+            log.info("Key is valid!");
+            return Views.fromClasspath("five/five.html", new Views.ViewParameter("key", key));
+        } else {
+            return Views.fromClasspath("five/five_nope.html");
+        }
+    }
+
+    @SneakyThrows
+    @RequestMapping(path = "/cheesecake/{key}/solve", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
+    public String fiveSolve(@PathVariable String key,
+                            @RequestParam("s1") String s1,
+                            @RequestParam("s2") String s2,
+                            @RequestParam("s3") String s3,
+                            @RequestParam("s4") String s4,
+                            @RequestParam("s5") String s5,
+                            @RequestParam("s6") String s6,
+                            @RequestParam("s7") String s7,
+                            @RequestParam("s8") String s8
+
+
+    ) {
+        String text = "" + s1 + ", " + s2 + ", " + s3 + ", " + s4 + ", " + s5 + ", " + s6 + ", " + s7 + ", " + s8;
+        if (are8differenStrings(s1, s2, s3, s4, s5, s6, s7, s8)) {
+            log.info("Called solve: " + s1 + ", " + s2 + ", " + s3 + ", " + s4);
+            if ((s1.hashCode() == s2.hashCode())
+                    && (s1.hashCode() == s3.hashCode())
+                    && (s1.hashCode() == s4.hashCode())
+                    && (s1.hashCode() == s5.hashCode())
+                    && (s1.hashCode() == s6.hashCode())
+                    && (s1.hashCode() == s7.hashCode())
+                    && (s1.hashCode() == s8.hashCode())
+                    ) {
+                log.info("All hashes equal!");
+                return "CHALLENGE 5: COMPLETED!!!";
+            }
+            return text + " = :(((";
+        } else {
+            return "You need 8 different Strings :(";
+        }
+    }
+
+    private boolean are8differenStrings(String... strings) {
+        Set<String> mySet = new HashSet<>();
+        for (String string : strings) {
+            mySet.add(string);
+        }
+        return mySet.size() == 8;
+    }
+
+    private boolean isValidKey(String key) {
+        try {
+            String email = symetricEncryption.decrypt(key);
+            return sha1(email).startsWith("a51dea5");
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            return false;
+        }
     }
 
     private boolean hasNoContentLength(HttpServletRequest httpServletRequest) {

@@ -22,8 +22,8 @@ public class SymetricEncryptionTest {
 
     @Test
     public void encrytion() throws Exception {
-        String encrypt = symetricEncryption.encrypt("barriwaschi+123@gmail.com");
-        assertThat(encrypt).isEqualTo("CWKUCatHTUaAHApvhlLWzKz8XtfxrXS%2BQCAOt%2BSV%2Byg%3D");
-        assertThat(symetricEncryption.decrypt(encrypt)).isEqualTo("barriwaschi+123@gmail.com");
+        String encrypt = symetricEncryption.encrypt("barriwaschi+130219734@gmail.com");
+        assertThat(encrypt).isEqualTo("yNin4r7k7C9K6DWv9FVpvjG0ko_-FmTzoqK58X5cqGk=");
+        assertThat(symetricEncryption.decrypt(encrypt)).isEqualTo("barriwaschi+130219734@gmail.com");
     }
 }
