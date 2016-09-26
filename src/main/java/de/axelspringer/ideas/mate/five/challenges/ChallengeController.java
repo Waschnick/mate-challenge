@@ -144,12 +144,21 @@ public class ChallengeController {
                     && (s1.hashCode() == s8.hashCode())
                     ) {
                 log.info("All hashes equal!");
+                doWin(key);
                 return "CHALLENGE 5: COMPLETED!!!";
             }
             return text + " = :(((";
         } else {
             return "You need 8 different Strings :(";
         }
+    }
+
+    private void doWin(String key) {
+        String email = symetricEncryption.decrypt(key);
+        String gewinnCode = symetricEncryption.encrypt("winner:" + email);
+        log.info("WIN for E-Mail!!!");
+        mailSender.send(email, email, "Hey! Hier ist dein Gewinn-Code: " + gewinnCode);
+        mailSender.send(email, "barriwaschi@gmail.com", "Gewinner: " + email + " mit Code: " + gewinnCode);
     }
 
     private boolean are8differenStrings(String... strings) {
