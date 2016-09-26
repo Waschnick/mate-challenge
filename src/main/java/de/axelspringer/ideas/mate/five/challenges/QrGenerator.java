@@ -4,7 +4,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import javafx.scene.paint.Color;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,7 @@ public class QrGenerator {
 
         for (int i = 0; i < dimension; i++) {//width
             for (int j = 0; j < dimension; j++) {//height
-                int color = bm.get(i, j) ? -1 : Color.BLACK.hashCode();
+                int color = bm.get(i, j) ? -1 : java.awt.Color.BLACK.hashCode();
                 bufferedImage.setRGB(i, j, color);
             }
         }
