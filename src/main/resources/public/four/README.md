@@ -19,8 +19,6 @@ Physikalische Schallplatten sind out, wir nutzen jetzt digitale Schallplatten! E
 
 Dieses Mal ist es etwas schwieriger, falls es aber trotzdem mehrere korrekte Einsendungen gibt, dann entscheidet die Eleganz der Lösung, exotic der Programmiersprache und danach meine subjektive Einschätzung.
 
-- Und für JS-Entwickler hier der direkte Link um das Bild schnell zu laden: https://raw.githubusercontent.com/CanardSauvage/mate-challenge/master/src/main/resources/vinyl.png
-
 Tipps
 -----
 
