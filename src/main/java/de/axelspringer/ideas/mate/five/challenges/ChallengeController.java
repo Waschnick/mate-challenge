@@ -132,6 +132,10 @@ public class ChallengeController {
 
 
     ) {
+        if (!isValidKey(key)) {
+            return Views.fromClasspath("five/five_nope.html");
+        }
+
         String text = "" + s1 + ", " + s2 + ", " + s3 + ", " + s4 + ", " + s5 + ", " + s6 + ", " + s7 + ", " + s8;
         if (are8differenStrings(s1, s2, s3, s4, s5, s6, s7, s8)) {
             log.info("Called solve: " + s1 + ", " + s2 + ", " + s3 + ", " + s4);
