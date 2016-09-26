@@ -4,6 +4,7 @@ import de.axelspringer.ideas.mate.five.util.Views;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/five")
 public class ChallengeController {
+
+    @Autowired
+    private MailSender mailSender;
+
+    @Autowired
+    private QrGenerator qrGenerator;
 
     @RequestMapping(path = {"", "/"})
     public String zero() {
@@ -49,6 +56,9 @@ public class ChallengeController {
                 if (email != null) {
 
                     if (sha1(email).startsWith("a51dea5")) {
+
+                        mailSender.send(name, email, qrGenerator.generateQrText(email));
+
                         Views.fromClasspath("five/three_with_email_ok.html",
                                 new Views.ViewParameter("name", name),
                                 new Views.ViewParameter("email", email),
@@ -69,7 +79,7 @@ public class ChallengeController {
             return Views.fromClasspath("five/two.html");
         }
 
-        return Views.fromClasspath("five/one.html");
+        return Views.fromClasspath("five/two.html");
     }
 
     private Map<String, String> bodyToParameters(String body) {
@@ -86,6 +96,7 @@ public class ChallengeController {
 
     @RequestMapping(path = "/cheesecake/{key}")
     public String five(@PathVariable String key) {
+        log.info("Called last challenge with key: " + key);
         return Views.fromClasspath("five/five.html", new Views.ViewParameter("key", key));
     }
 

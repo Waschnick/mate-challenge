@@ -1,6 +1,7 @@
 package de.axelspringer.ideas.mate.five.challenges;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -16,8 +17,11 @@ import java.util.Properties;
 @Service
 public class MailSender {
 
-    private final static String username = "mate.challenge@gmail.com";
-    private final static String password = "YanaAusKorea";
+    @Value("${de.axelspringer.ideas.mate.mail.user:mate.challenge@gmail.com}")
+    private String username;
+
+    @Value("${de.axelspringer.ideas.mate.mail.password:changeit}")
+    private String password;
 
 
     public void send(String name, String email, String text) {
