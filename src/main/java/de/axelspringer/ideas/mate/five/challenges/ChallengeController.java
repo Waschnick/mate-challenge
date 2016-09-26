@@ -65,7 +65,7 @@ public class ChallengeController {
                     log.info("E-Mail gefunden: " + email);
 
                     if (sha1(email).startsWith("a51dea5")) {
-
+                        log.info("Hash for E-Mail " + email + " is correct!!!");
                         mailSender.send(name, email, qrGenerator.generateQrText(email));
 
                         return Views.fromClasspath("five/three_with_email_ok.html",
@@ -100,7 +100,7 @@ public class ChallengeController {
         return result;
     }
 
-    @RequestMapping(path = "/cheesecake/{key}")
+    @RequestMapping(path = "/cheesecake/{key}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
     public String five(@PathVariable String key) {
         log.info("Called last challenge with key: " + key);
         return Views.fromClasspath("five/five.html", new Views.ViewParameter("key", key));

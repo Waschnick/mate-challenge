@@ -9,6 +9,8 @@ import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Arrays;
 
@@ -21,8 +23,7 @@ public class SymetricEncryption {
     private String password;
 
     @SneakyThrows
-    public String encrypt(final String valueToEncrypt) {
-
+    public String encrypt(String valueToEncrypt) {
         String encryptedVal = null;
 
         final Key key = generateKeyFromString(password);
@@ -31,11 +32,12 @@ public class SymetricEncryption {
         final byte[] encValue = c.doFinal(valueToEncrypt.getBytes());
         encryptedVal = new BASE64Encoder().encode(encValue);
 
-        return encryptedVal;
+        return URLEncoder.encode(encryptedVal, "UTF-8");
     }
 
     @SneakyThrows
-    public String decrypt(final String encryptedValue) {
+    public String decrypt(String encryptedValue) {
+        encryptedValue = URLDecoder.decode(encryptedValue, "UTF-8");
 
         String decryptedValue = null;
 
