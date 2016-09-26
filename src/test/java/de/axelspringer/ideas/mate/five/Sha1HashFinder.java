@@ -8,7 +8,7 @@ public class Sha1HashFinder {
 
     public static void main(String[] args) throws Exception {
         // example+1899634@example.com | sha1sum
-        String baseMail = "example+%d@example.com";
+        String baseMail = "barriwaschi+%d@gmail.com";
         String hash = "";
         long counter = 0;
         while (!hash.startsWith("a51dea5")) {

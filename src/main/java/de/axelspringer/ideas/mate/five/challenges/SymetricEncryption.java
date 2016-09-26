@@ -1,5 +1,6 @@
 package de.axelspringer.ideas.mate.five.challenges;
 
+import de.axelspringer.ideas.mate.five.util.Sha1;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import sun.misc.BASE64Encoder;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.util.Arrays;
 
 @Service
 public class SymetricEncryption {
@@ -48,8 +50,8 @@ public class SymetricEncryption {
     }
 
     private Key generateKeyFromString(final String secKey) throws Exception {
-        final byte[] keyVal = new BASE64Decoder().decodeBuffer(secKey);
-        final Key key = new SecretKeySpec(keyVal, ALGORITHM);
-        return key;
+        byte[] key = new BASE64Decoder().decodeBuffer(Sha1.sha1(secKey));
+        key = Arrays.copyOf(key, 16); // use only first 128 bit
+        return new SecretKeySpec(key, ALGORITHM);
     }
 }
