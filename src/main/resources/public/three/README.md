@@ -1,4 +1,4 @@
-Hallo PCP,
+Hallo IDEAS,
 
 
 Die ClubMate ist mal wieder alle. Lasst uns ein Spiel spielen! Der Gewinner bekommt 1 Mate und einen super exklusiven Preis, Platz zwei und drei jeweils eine Mate.

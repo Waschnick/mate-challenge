@@ -19,8 +19,6 @@ Physikalische Schallplatten sind out, wir nutzen jetzt digitale Schallplatten! E
 
 Dieses Mal ist es etwas schwieriger, falls es aber trotzdem mehrere korrekte Einsendungen gibt, dann entscheidet die Eleganz der Lösung, exotic der Programmiersprache und danach meine subjektive Einschätzung.
 
-Schnellstart
-- Und als Quickstart für die Java-Entwickler unter euch ein Maven-Projekt mit einer kleinen App: https://github.com/CanardSauvage/mate-challenge.git
 - Und für JS-Entwickler hier der direkte Link um das Bild schnell zu laden: https://raw.githubusercontent.com/CanardSauvage/mate-challenge/master/src/main/resources/vinyl.png
 
 Tipps
@@ -55,4 +53,55 @@ public static void playSound(byte[] buffer) {
 
 ```
 80 80 7f 7f 80 80 80 7f 80 80 7f 7f 80 7f 7f 80 7f 80 7f 7f 80 7f 80 7f 7f 7f 80 80 7f 80 7f 80
+```
+
+Tipps3
+------
+
+Etwas Java auf die Ohren, als Hilfe für alle Java-Freunde:
+
+```
+public final class StreamPlayer {
+
+    public final AudioFormat audioFormat;
+    public final DataLine.Info info;
+    public final SourceDataLine soundLine;
+
+    public StreamPlayer() {
+        try {
+            audioFormat = new AudioFormat(4000, 8, 1, true, false);
+            info = new DataLine.Info(SourceDataLine.class, audioFormat, 1500);
+            soundLine = (SourceDataLine) AudioSystem.getLine(info);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public static void playSound(List<Byte> buffer) {
+        playSound(buffer.toArray(new Byte[buffer.size()]));
+    }
+
+    public static void playSound(Byte[] buffer) {
+        playSound(ArrayUtils.toPrimitive(buffer));
+    }
+
+    public static void playSound(byte[] buffer) {
+        try {
+            StreamPlayer streamPlayer = new StreamPlayer();
+            streamPlayer.startSoundLine();
+            streamPlayer.playStream(buffer);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void startSoundLine() throws LineUnavailableException {
+        soundLine.open(audioFormat);
+        soundLine.start();
+    }
+
+    public void playStream(byte[] buffer) {
+        soundLine.write(buffer, 0, buffer.length);
+    }
+}
 ```

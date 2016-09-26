@@ -1,4 +1,4 @@
-Hallo PCP,
+Hallo ÌDEAS,
 
 lasst uns ein Spiel spielen! Der Gewinner bekommt 1 Mate und einen super exklusiven Preis (ohne Witz), Platz zwei und drei jeweils eine Mate.
 
