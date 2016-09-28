@@ -26,6 +26,34 @@ gibt es dafür nur 2^32 mögliche Kombinationen. Das ist nicht viel.
 Und führt zu spannenden Phänomenen: Was passiert, wenn zwei unterschiedliche
 Strings den gleichen Hash haben?
 
+Vor Java 8 gab es hier die Möglichkeit tolle DoS-Attacken zu fahren. Das ganze
+funktioniert so, dass man eine Anfrage mit vielen verschiedenen Keys
+(z.B. Request-Parameter) mit gleichem Hash gestellt hat.
+
+
+Pro Tipp
+========
+
+Für extra DoS-Erfolg kann man sicherstellen, dass der Hash immer 0 ist,
+dadurch funktioniert vor Java 8 der Cache nicht korrekt und der Hash der
+gespeicherten Strings wird durch Java immer neu berechnet. Extra Pow!
+
+<code style="display: none">
+Pro Tipp2
+=========
+
+Ist euch aufgefallen, dass immer Vielfache von 31 verwendet werden und
+bei Ascii Groß- und Kleinschreibung 32 auseinander liegen? *hust*
+
+hash('A') = 65
+hash('B') = 66
+hash('a') = 97
+
+hash('AA') = 2080
+hash('Aa') = 2112
+
+</code>
+
 # Ein int, bitte!
 <code>
 public int hashCode() {

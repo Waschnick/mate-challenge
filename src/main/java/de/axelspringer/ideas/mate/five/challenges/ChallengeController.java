@@ -149,7 +149,7 @@ public class ChallengeController {
                     ) {
                 log.info("All hashes equal!");
                 doWin(key);
-                return "CHALLENGE 5: COMPLETED!!!";
+                return "CHALLENGE 5: COMPLETED!!! Du bekommst jetzt eine Mail mit einem Gewinn-Token, den kannst du bei mir einlösen.";
             }
             return text + " = :(((";
         } else {
