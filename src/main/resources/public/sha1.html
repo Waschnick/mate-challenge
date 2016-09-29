@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AS Ideas Engineering - Mate Challenge</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="//cdn.jsdelivr.net/metro-bootstrap/3.1.1.2/css/metro-bootstrap.min.css"/>
+
+    <script src="/jquery-3.1.0.min.js"></script>
+    <script src="/lib/sha1.min.js"></script>
+
+
+    <script>
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+
+        var stop = false;
+
+        function calc() {
+            stop = false;
+            var baseMail = $("#base").val();
+            console.info("Base mail: " + baseMail);
+
+            if (baseMail.indexOf("+") >= 0) {
+                $("#out").text("Mail must not contain '+'");
+                return;
+            }
+
+            if (baseMail != undefined && baseMail && !validateEmail(baseMail)) {
+                $("#out").text("Mail must be valid.");
+                return;
+            }
+
+            // example+1899634@example.com | sha1sum
+            var hash = "";
+            var counter = 0;
+            var base1 = baseMail.split("@")[0];
+            var base2 = baseMail.split("@")[1];
+            console.info("Base mail part 1: " + base1);
+            console.info("Base mail part 2: " + base2);
+
+            while (!hash.startsWith("a51dea5") || !stop) {
+                counter++;
+                var mail = base1 + counter + base2;
+                hash = sha1(mail);
+                if (counter % 1000000 == 0) {
+                    console.info(counter / 1000000 + "M");
+                }
+            }
+
+            console.info(hash);
+            console.info(mail);
+
+        }
+    </script>
+
+</head>
+<body>
+<h1>Open console first!</h1>
+<input id="base" type="text" style="width: 300px;"/>
+<div id="out"></div>
+<button onclick="calc()">Calc</button>
+</body>
+</html>
