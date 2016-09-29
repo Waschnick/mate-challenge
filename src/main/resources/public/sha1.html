@@ -17,8 +17,6 @@
             return re.test(email);
         }
 
-        var stop = false;
-
         function calc() {
             stop = false;
             var baseMail = $("#base").val();
@@ -37,17 +35,17 @@
             // example+1899634@example.com | sha1sum
             var hash = "";
             var counter = 0;
-            var base1 = baseMail.split("@")[0];
+            var base1 = baseMail.split("@")[0] + "+";
             var base2 = baseMail.split("@")[1];
             console.info("Base mail part 1: " + base1);
             console.info("Base mail part 2: " + base2);
 
-            while (!hash.startsWith("a51dea5") || !stop) {
+            while (!hash.startsWith("a51dea5")) {
                 counter++;
                 var mail = base1 + counter + base2;
                 hash = sha1(mail);
                 if (counter % 1000000 == 0) {
-                    console.info(counter / 1000000 + "M");
+                    console.info(counter / 1000000 + "M with mail " + mail + " and hash " + hash);
                 }
             }
 
