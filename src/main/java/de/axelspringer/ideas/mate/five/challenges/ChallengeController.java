@@ -4,6 +4,7 @@ import de.axelspringer.ideas.mate.five.util.Views;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,13 +73,22 @@ public class ChallengeController {
 
                     if (sha1(email).startsWith("a51dea5")) {
                         log.info("Hash for E-Mail " + email + " is correct!!!");
-                        mailSender.send(name, email, qrGenerator.generateQrText(email));
 
-                        return Views.fromClasspath("five/three_with_email_ok.html",
-                                new Views.ViewParameter("name", name),
-                                new Views.ViewParameter("email", email),
-                                new Views.ViewParameter("digest", sha1(email))
-                        );
+                        if (EmailValidator.getInstance().isValid(email)) {
+                            mailSender.send(name, email, qrGenerator.generateQrText(email));
+
+                            return Views.fromClasspath("five/three_with_email_ok.html",
+                                    new Views.ViewParameter("name", name),
+                                    new Views.ViewParameter("email", email),
+                                    new Views.ViewParameter("digest", sha1(email))
+                            );
+                        } else {
+                            return Views.fromClasspath("five/three_with_email_invalid.html",
+                                    new Views.ViewParameter("name", name),
+                                    new Views.ViewParameter("email", email),
+                                    new Views.ViewParameter("digest", sha1(email))
+                            );
+                        }
                     } else {
                         return Views.fromClasspath("five/three_with_email.html",
                                 new Views.ViewParameter("name", name),

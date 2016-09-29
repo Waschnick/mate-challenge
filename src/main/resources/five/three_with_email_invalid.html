@@ -1,0 +1,57 @@
+<pre>
+Challenge 3: Is it worth it? Let me work it.
+=============================================
+
+Diese Challenge ist ein wenig anders und wird etwas Aufwand auf deiner Seite
+erfodern.
+
+Also wenn du nicht unter einem Stein lebst, dann hast du schon von Bitcoins gehört.
+Ja, es war nur eine Frage der Zeit, bis sowas kommt, aber bleib bei mir.
+Der Grund wieso ich Bitcoins erwähne ist, dass es eube gemeinsame Gesichte mit
+E-Mails haf. Insbesondere das proof-of-work system[1], also hashing, bis der hash
+einem bestimmten Muster entspricht, damit man Spam bekämpft.
+
+Spam ist böse. Du bist gut.
+
+Ich sende dir eine E-Mail mit Challenge 4 wenn du mir eine E-Mai Adresse gibst,
+deren 'sha1' Hash mit 'as1deas' beginnt.
+
+Dann POSTe es als 'email' zusammen mit deinem name.
+
+Als Beispiel: (das "-n" unterdrückt das führende newline-Zeichen)
+
+$ echo -n example+19546430@example.com | sha1sum
+a51dea52388b4acd501e296382873057560c4a0c  -
+^^^^^^^
+Das würde funktionieren, weil der sha1 hash mit 'a51dea5' anfängt.
+AAls Beispiel, auf einem moderen Laptop sollte die Generierung eines Matches in unter
+einer Minute funktionieren.
+
+
+Pro tip: Test deinen Code mit einem führenden "a", was einfach sein sollte,
+danach mit führendem "a5", dann mit "a51", etc. bis du dir sicher bist,
+dass dein Code funktionert.
+
+Am besten testest du deinen Code auch mal mit der Beispiel-Adresse.
+
+
+[1] https://en.wikipedia.org/wiki/Proof-of-work_system
+
+Was du gesendet hast:
+---------------------
+
+Name: {name}
+Email: {email}
+
+Berechnet
+---------
+Digest: {digest}
+
+
+NOPE!
+-----
+
+Du brauchst eine valide E-Mail-Adresse. Wie soll ich dir an {email} irgendwas senden?
+
+
+</pre>

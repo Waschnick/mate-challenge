@@ -37,6 +37,12 @@
             <!-- PROVIDED means it is only avaible while compiling, but it won't be in the jar/war -->
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
 
         <!-- QR-Generator -->
         <dependency>
