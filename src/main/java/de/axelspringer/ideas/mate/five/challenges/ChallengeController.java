@@ -53,6 +53,8 @@ public class ChallengeController {
     public String oneAndTwoAndThree(HttpServletRequest httpServletRequest,
                                     @RequestBody(required = false) String body) {
 
+        log.info("Challenge one and two called.");
+
         if (StringUtils.isNotBlank(body)) {
             log.info("Found Body: " + body);
             body = URLDecoder.decode(body, "UTF-8");
@@ -60,6 +62,7 @@ public class ChallengeController {
             Map<String, String> parameters = bodyToParameters(body);
 
             if (hasNoContentLength(httpServletRequest)) {
+                log.info("Challenge two: Nope.");
                 return Views.fromClasspath("five/two_error.html");
             }
             String name = parameters.get("name");
@@ -76,6 +79,7 @@ public class ChallengeController {
 
                         if (EmailValidator.getInstance().isValid(email)) {
                             mailSender.send(name, email, qrGenerator.generateQrText(email));
+                            log.info("Challenge three: Complete! name: " + name + " mail: " + email);
 
                             return Views.fromClasspath("five/three_with_email_ok.html",
                                     new Views.ViewParameter("name", name),
@@ -83,6 +87,8 @@ public class ChallengeController {
                                     new Views.ViewParameter("digest", sha1(email))
                             );
                         } else {
+                            log.info("Challenge three: Nope, no real mail.");
+
                             return Views.fromClasspath("five/three_with_email_invalid.html",
                                     new Views.ViewParameter("name", name),
                                     new Views.ViewParameter("email", email),
@@ -90,6 +96,8 @@ public class ChallengeController {
                             );
                         }
                     } else {
+                        log.info("Challenge three: wrong hash. name: " + name + " mail: " + email);
+
                         return Views.fromClasspath("five/three_with_email.html",
                                 new Views.ViewParameter("name", name),
                                 new Views.ViewParameter("email", email),
@@ -142,7 +150,10 @@ public class ChallengeController {
 
 
     ) {
+        log.info("Chessecake with key: " + key);
+
         if (!isValidKey(key)) {
+
             return Views.fromClasspath("five/five_nope.html");
         }
 
