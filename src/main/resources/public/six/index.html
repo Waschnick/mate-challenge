@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AS Ideas Engineering - Mate Challenge 04</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="//cdn.jsdelivr.net/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="//cdn.jsdelivr.net/metro-bootstrap/3.1.1.2/css/metro-bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link rel="stylesheet" href="/six/bootstrap-pincode-input.css">
+    <script src="/jquery-3.1.0.min.js"></script>
+    <script src="/six/bootstrap-pincode-input.js"></script>
+
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .l-main {
+            max-width: 960px;
+            margin-top: 35vh;
+        }
+    </style>
+</head>
+<body>
+<div class="l-main">
+    <div>
+        <h1>Enter PIN to access the challenge</h1>
+    </div>
+    <div>
+        <input type="text" id="pincode-input"/>
+    </div>
+    <button onclick="checkPin()">Enter</button>
+</div>
+<script>
+    function checkPin() {
+        $.get("http://waschnick.de/check_pin.php?pin=" + $('#pincode-input').val(), function (data) {
+
+        });
+
+    }
+
+    function keyDownFunction(e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    }
+
+    $(new function () {
+        $('#pincode-input').pincodeInput({
+            hidedigits: false,
+            inputs: 6,
+            keydown: keyDownFunction
+        });
+    });
+</script>
+</body>
+</html>
