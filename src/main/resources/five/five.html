@@ -1,6 +1,220 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+    <title>Mate-Challenge</title>
+
+    <script src="/jquery-3.1.0.min.js"></script>
+
+</head>
+
+<body>
 <pre>
+Challenge 4: Completed!
+=======================
+
+Soso, du hast also den Weg hierher gefunden. Also dann, die finale
+Herausforderung, die zwischen dir und deinem Bier steht!
+
+
 Challenge 5: When stars collide
 ===============================
 
+Java hat eine tolle Hash-Function, um Strings zu hashen. Leider
+gibt es dafür nur 2^32 mögliche Kombinationen. Das ist nicht viel.
+Und führt zu spannenden Phänomenen: Was passiert, wenn zwei unterschiedliche
+Strings den gleichen Hash haben?
+
+Vor Java 8 gab es hier die Möglichkeit tolle DoS-Attacken zu fahren. Das ganze
+funktioniert so, dass man eine Anfrage mit vielen verschiedenen Keys
+(z.B. Request-Parameter) mit gleichem Hash gestellt hat.
+
+
+Pro Tipp
+========
+
+Für extra DoS-Erfolg kann man sicherstellen, dass der Hash immer 0 ist,
+dadurch funktioniert vor Java 8 der Cache nicht korrekt und der Hash der
+gespeicherten Strings wird durch Java immer neu berechnet. Extra Pow!
+
+<code style="display: none">
+Pro Tipp2
+=========
+
+Ist euch aufgefallen, dass immer Vielfache von 31 verwendet werden und
+bei Ascii Groß- und Kleinschreibung 32 auseinander liegen? *hust*
+
+hash('A') = 65
+hash('B') = 66
+hash('a') = 97
+
+hash('AA') = 2080
+hash('Aa') = 2112
+
+</code>
+
+# Ein int, bitte!
+<code>
+public int hashCode() {
+  int h = hash;
+  if (h == 0 && value.length > 0) {
+    char val[] = value;
+
+    for (int i = 0; i < value.length; i++) {
+      h = 31 * h + val[i];
+    }
+    hash = h;
+  }
+  return h;
+}
+</code>
+
+# Give me some JavaScript!
+<code>
+function hash(s) {
+    var hash = 0;
+    var strlen = s.length;
+    var i;
+    var c;
+
+    if (strlen === 0) {
+        return hash;
+    }
+
+    for (i = 0; i < strlen; i++) {
+        c = s.charCodeAt(i);
+        hash = ((hash << 5) - hash) + c;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+}
+</code>
+
+Deine Aufgabe
+=============
+
+Gib mir 8 Strings mit gleichen Hash und du kriegst dafür 2 Bier.
+View zu eins ist doch fair, oder?
 
 </pre>
+<div>
+    <input id="s1" type="text" placeholder="#1" onchange="recalc()"/>
+    <span id="r1"></span>
+</div>
+
+<div>
+    <input id="s2" type="text" placeholder="#2" onchange="recalc()"/>
+    <span id="r2"></span>
+</div>
+
+<div>
+    <input id="s3" type="text" placeholder="#3" onchange="recalc()"/>
+    <span id="r3"></span>
+</div>
+
+<div>
+    <input id="s4" type="text" placeholder="#4" onchange="recalc()"/>
+    <span id="r4"></span>
+</div>
+
+<div>
+    <input id="s5" type="text" placeholder="#5" onchange="recalc()"/>
+    <span id="r5"></span>
+</div>
+
+<div>
+    <input id="s6" type="text" placeholder="#6" onchange="recalc()"/>
+    <span id="r6"></span>
+</div>
+
+<div>
+    <input id="s7" type="text" placeholder="#7" onchange="recalc()"/>
+    <span id="r7"></span>
+</div>
+
+<div>
+    <input id="s8" type="text" placeholder="#8" onchange="recalc()"/>
+    <span id="r8"></span>
+</div>
+<div>
+    <input id="sendButton" type="button" onclick="sendToBackend()" value="Senden!"/>
+    <div id="result"></div>
+</div>
+</body>
+<script>
+    function hash2(val) {
+        var hash = 0;
+        if (val.length == 0) {
+            return hash;
+        }
+        for (i = 0; i < val.length; i++) {
+            char = val.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    }
+
+    function hash(s) {
+        var hash = 0;
+        var strlen = s.length;
+        var i;
+        var c;
+
+        if (strlen === 0) {
+            return hash;
+        }
+
+        for (i = 0; i < strlen; i++) {
+            c = s.charCodeAt(i);
+            hash = ((hash << 5) - hash) + c;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    }
+
+    function recalc() {
+        console.info("Recalc hashes");
+        var s1 = $("#s1").val();
+        var s2 = $("#s2").val();
+        var s3 = $("#s3").val();
+        var s4 = $("#s4").val();
+        var s5 = $("#s5").val();
+        var s6 = $("#s6").val();
+        var s7 = $("#s7").val();
+        var s8 = $("#s8").val();
+
+        $("#r1").html(hash(s1));
+        $("#r2").html(hash(s2));
+        $("#r3").html(hash(s3));
+        $("#r4").html(hash(s4));
+        $("#r5").html(hash(s5));
+        $("#r6").html(hash(s6));
+        $("#r7").html(hash(s7));
+        $("#r8").html(hash(s8));
+    }
+
+    function sendToBackend() {
+        var s1 = $("#s1").val();
+        var s2 = $("#s2").val();
+        var s3 = $("#s3").val();
+        var s4 = $("#s4").val();
+        var s5 = $("#s5").val();
+        var s6 = $("#s6").val();
+        var s7 = $("#s7").val();
+        var s8 = $("#s8").val();
+
+        $("#sendButton").prop("disabled", true);
+
+        $.get("/five/cheesecake/{key}/solve", {s1: s1, s2: s2, s3: s3, s4: s4, s5: s5, s6: s6, s7: s7, s8: s8})
+                .done(function (data) {
+                    $("#result").html(data);
+                    $("#sendButton").prop("disabled", false);
+                    if (data.indexOf("COMPLETED") != -1) {
+                        alert(data);
+                    }
+                });
+    }
+</script>
+</html>

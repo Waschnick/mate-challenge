@@ -19,7 +19,7 @@ public class Views {
     public static String fromClasspath(String file, ViewParameter... params) {
         String view = IOUtils.toString(Views.class.getClassLoader().getResourceAsStream(file), Charsets.UTF_8);
         for (ViewParameter param : params) {
-            view = view.replaceAll("{" + param.getKey() + "}", param.getValue());
+            view = view.replaceAll("\\{" + param.getKey() + "\\}", param.getValue());
         }
         return view;
     }

@@ -1,15 +1,17 @@
-# Challenge 0: Schau dir den Source-Code an
+## Mate-Challenge 1
 
-# Challenge 1: Sende ein POST
-curl -X POST -vk --header "Content-length: 0" --form "name=Sebastian"  localhost:8080
+## Mate-Challenge 2
 
-# Challenge 2: POSTe deinen Namen
+## Mate-Challenge 3
 
-# Challenge 3: Proof-Of-Work
-
-# Challenge 4: ???
-
-# Challenge 5: Hashing & Hash-Collision
+## Mate-Challenge 4
 
 https://github.com/chjj/marked
 https://highlightjs.org/
+http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+
+# Needed Environment-Variables
+
+de.axelspringer.ideas.mate.crypto.password={Password for symetric encryption}
+de.axelspringer.ideas.mate.mail.user={Gmail full mail address}
+de.axelspringer.ideas.mate.mail.password={Gmail password}

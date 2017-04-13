@@ -3,6 +3,7 @@ package de.axelspringer.ideas.mate.five;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import de.axelspringer.ideas.mate.six.NeverPay;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -35,7 +36,12 @@ public class StocardChallengeTest {
 
     @Test
     public void challenge_4() throws Exception {
-        // "QEFP FP X HXKPXP ZFQV PERCCIB";
+        String value = "QEFP FP X HXKPXP ZFQV PERCCIB";
+
+        NeverPay neverPay = new NeverPay();
+
+        // FIXME Remove System.out
+        System.out.println(neverPay.decode(value));
     }
 
     @Test
