@@ -49,30 +49,6 @@
             <version>1.5.1</version>
         </dependency>
 
-<<<<<<< HEAD
-            <!-- Utils -->
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.2.2</version>
-            </dependency>
-=======
->>>>>>> a1212503fb3df59cffe2890b0e42ab81b02f28b0
-
         <!-- QR-Generator -->
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -114,6 +90,10 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
 
         <!-- Tests -->
