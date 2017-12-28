@@ -1,13 +1,12 @@
 package de.axelspringer.ideas.mate.six;
 
-import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class ChallengeSixControllerTest {
 
 
-    @Test
+    // @Test
     public void name() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
 

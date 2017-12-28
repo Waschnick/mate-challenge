@@ -1,7 +1,6 @@
-package de.axelspringer.ideas.mate.five.challenges.six;
+package de.axelspringer.ideas.mate.six;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 public class BruteForcePinTest {
 
 
-    @Test
+    //@Test
     public void bruteFore() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         long start = System.currentTimeMillis();

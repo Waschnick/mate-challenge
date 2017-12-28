@@ -1,6 +1,5 @@
-package de.axelspringer.ideas.mate.five.challenges.six;
+package de.axelspringer.ideas.mate.six;
 
-import de.axelspringer.ideas.mate.six.NeverPay;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
