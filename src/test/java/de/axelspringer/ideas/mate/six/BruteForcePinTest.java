@@ -1,7 +1,6 @@
 package de.axelspringer.ideas.mate.six;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ public class BruteForcePinTest {
 
     //@Test
     public void bruteFore() throws Exception {
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
         long start = System.currentTimeMillis();
         List<String> values = new ArrayList<>();
 
@@ -40,7 +39,7 @@ public class BruteForcePinTest {
 //                    if (System.currentTimeMillis() % 100 == 0) {
 //                        System.out.println(value + " in " + ((System.currentTimeMillis() - start) / 1000) + "s");
 //                    }
-                    return "true".equalsIgnoreCase(restTemplate.getForObject("http://waschnick.de/check_pin.php?pin=" + value, String.class));
+                    return "true".equalsIgnoreCase(getForObject("http://waschnick.de/check_pin.php?pin=" + value, String.class));
                 })
                 .collect(Collectors.toList());
 
@@ -52,5 +51,9 @@ public class BruteForcePinTest {
             // FIXME Remove System.out
             System.out.println("Result: " + s);
         }
+    }
+
+    private String getForObject(String s, Class<String> stringClass) {
+        return null;
     }
 }

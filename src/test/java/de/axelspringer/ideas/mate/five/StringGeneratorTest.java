@@ -1,4 +1,4 @@
-package de.axelspringer.ideas.mate.five.challenges;
+package de.axelspringer.ideas.mate.five;
 
 import org.junit.Test;
 

@@ -1,11 +1,12 @@
-package de.axelspringer.ideas.mate.five.challenges;
+package de.axelspringer.ideas.mate.five;
 
+import de.axelspringer.ideas.mate.MateChallengeProperties;
+import de.axelspringer.ideas.mate.five.SymetricEncryption;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ public class SymetricEncryptionTest {
 
     @Before
     public void beforeMethod() throws Exception {
-        Whitebox.setInternalState(symetricEncryption, "password", "changeit");
+        MateChallengeProperties.INSTANCE.encryptionPassword = "changeit";
     }
 
     @Test

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TeamMood</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        iframe {
+            top: 0;
+            left: 0;
+            width: 100%;
+            border: none;
+        }
+
+        .message-box {
+            position: absolute;
+            margin: auto;
+            top: 60px;
+            right: 10%;
+            z-index: 9000;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="alert alert-success message-box hidden">
+    <strong>Success!</strong> Mail was send.
+</div>
+
+<div class="alert alert-danger message-box hidden">
+    <strong>Error!</strong> Mail NOT send.
+</div>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-static-top justify-content-center" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">TeamMood</a>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <p class="lead">Week #<i class="weekno"></i></p>
+            <div class="list-group">
+                <select class="form-control list-group-item teammood-week" id="selectWeek">
+                </select>
+            </div>
+            <div class="button-group">
+                <button type="button" class="btn btn-primary send-mail" onclick="sendMail()">Send Mail for week</button>
+                <button type="button" class="btn btn-info send-mail" onclick="openMail()">Open</button>
+            </div>
+            <br/>
+        </div>
+
+        <div class="col-md-9">
+            <div class="well">
+                <iframe id="myIframe" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<div class="container">
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Created by <a href="http://asideas.de">Axel Springer Ideas Engineering</a> thanks to <a href="https://teammood.com">TeamMood</a></p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<!-- /.container -->
+</body>
+
+<script>
+    var iframe = document.querySelector("#myIframe");
+    var weekno = document.querySelector(".weekno");
+    var selectWeek = document.querySelector("#selectWeek");
+
+    iframe.addEventListener("load", function (e) {
+        console.info("Loaded iframe for src: " + iframe.src);
+        resizeIFrameToFitContent(this);
+    });
+
+    var currentWeekNumber = getCurrentWeekNumber();
+    console.info("Current week is #" + currentWeekNumber);
+
+    // fill List-Box
+    for (var i = 0; i < currentWeekNumber; ++i) {
+        var option = document.createElement('option');
+        option.value = i + 1;
+        option.innerHTML = i + 1;
+        selectWeek.appendChild(option);
+    }
+    selectWeek.addEventListener("change", function (e) {
+        weekno.innerHTML = selectWeek.value;
+        iframe.src = "week/" + selectWeek.value;
+    });
+
+    weekno.innerHTML = currentWeekNumber;
+    selectWeek.value = currentWeekNumber;
+    iframe.src = "week/" + currentWeekNumber;
+
+    function openMail() {
+        window.open(iframe.src, '_blank');
+    }
+
+    function sendMail() {
+        console.info("SEND!");
+        document.querySelector(".send-mail").disabled = true;
+        $.get("week/" + selectWeek.value + "/send")
+                .done(function (data) {
+                    console.info("OK");
+                    document.querySelector(".alert-success").classList.remove("hidden");
+                    window.setTimeout(function () {
+                        document.querySelector(".alert-success").classList.add("hidden");
+                    }, 10000);
+                })
+                .fail(function (data) {
+                    console.error("ERROR");
+                    document.querySelector(".alert-danger").classList.remove("hidden");
+                    window.setTimeout(function () {
+                        document.querySelector(".alert-danger").classList.add("hidden");
+                    }, 10000);
+                })
+                .always(function (data) {
+                    document.querySelector(".send-mail").disabled = false;
+                });
+    }
+
+    function resizeIFrameToFitContent(iFrame) {
+        iFrame.width = iFrame.contentWindow.document.body.scrollWidth;
+        iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+    }
+
+    function getCurrentWeekNumber() {
+        var dt = new Date();
+        var tdt = new Date();
+        var dayn = (dt.getDay() + 6) % 7;
+        tdt.setDate(tdt.getDate() - dayn + 3);
+        var firstThursday = tdt.valueOf();
+        tdt.setMonth(0, 1);
+        if (tdt.getDay() !== 4) {
+            tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
+        }
+        return 1 + Math.ceil((firstThursday - tdt) / 604800000);
+    }
+
+</script>
+</html>

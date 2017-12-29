@@ -10,6 +10,8 @@ https://github.com/chjj/marked
 https://highlightjs.org/
 http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 
+eg. barriwaschi+130219734@gmail.com
+
 # Needed Environment-Variables
 
 de.axelspringer.ideas.mate.crypto.password={Password for symetric encryption}
