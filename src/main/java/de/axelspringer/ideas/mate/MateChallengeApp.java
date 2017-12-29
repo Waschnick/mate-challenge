@@ -4,6 +4,7 @@ import de.axelspringer.ideas.mate.common.SparkExceptionHandler;
 import de.axelspringer.ideas.mate.common.SparkUtils;
 import de.axelspringer.ideas.mate.five.ChallengeFiveController;
 import de.axelspringer.ideas.mate.five.ChallengeFivePart2Controller;
+import de.axelspringer.ideas.mate.six.ChallengeSixController;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,7 @@ public class MateChallengeApp {
 
         ChallengeFiveController.init();
         ChallengeFivePart2Controller.init();
+        ChallengeSixController.init();
 
 
     }

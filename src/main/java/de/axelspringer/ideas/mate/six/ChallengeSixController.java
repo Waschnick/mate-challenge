@@ -1,20 +1,31 @@
 package de.axelspringer.ideas.mate.six;
 
+import de.axelspringer.ideas.mate.common.MailSender;
+import de.axelspringer.ideas.mate.five.ChallengeFiveController;
+import de.axelspringer.ideas.mate.five.QrGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import spark.Route;
+import spark.Spark;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
 public class ChallengeSixController {
 
 
-//
-//    public String oneAndTwoAndThree(HttpServletRequest httpServletRequest,
-//                                    HttpServletResponse httpServletResponse,
-//                                    @RequestBody(required = false) String body) {
-//        // FIXME Remove System.out
-//        System.out.println(body);
-//        if ("123456".equals(body)) {
-//            return "1";
-//        }
-//        httpServletResponse.setStatus(400);
-//        return "0";
-//    }
+    private static final Logger log = LoggerFactory.getLogger(ChallengeFiveController.class);
+    private static final HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+
+    private static MailSender mailSender = new MailSender();
+    private static QrGenerator qrGenerator = new QrGenerator();
+
+    public static void init() {
+        Spark.get("/six/cheesecake/pin", pinRoute);
+    }
+
+    public static Route pinRoute = (request, response) -> {
+        String pin = request.queryParams("pin");
+        return "123456".equalsIgnoreCase(pin);
+    };
 
 
 }

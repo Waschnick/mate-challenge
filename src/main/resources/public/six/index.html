@@ -34,8 +34,8 @@
 </div>
 <script>
     function checkPin() {
-        $.get("http://waschnick.de/check_pin.php?pin=" + $('#pincode-input').val(), function (data) {
-
+        $.get("./cheesecake/pin?pin=" + $('#pincode-input').val(), function (data) {
+            console.info("RESULT", data);
         });
 
     }
