@@ -50,14 +50,14 @@ public class ChallengeFivePart2Controller {
 
     public static Route fiveSolveRoute = (request, response) -> {
         String key = request.params("key");
-        String s1 = request.params("s1");
-        String s2 = request.params("s2");
-        String s3 = request.params("s3");
-        String s4 = request.params("s4");
-        String s5 = request.params("s5");
-        String s6 = request.params("s6");
-        String s7 = request.params("s7");
-        String s8 = request.params("s8");
+        String s1 = request.queryParams("s1");
+        String s2 = request.queryParams("s2");
+        String s3 = request.queryParams("s3");
+        String s4 = request.queryParams("s4");
+        String s5 = request.queryParams("s5");
+        String s6 = request.queryParams("s6");
+        String s7 = request.queryParams("s7");
+        String s8 = request.queryParams("s8");
 
         log.info("Solve chessecake with key: " + key);
 
