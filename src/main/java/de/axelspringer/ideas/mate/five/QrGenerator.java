@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.net.URLEncoder;
 
 public class QrGenerator {
 
@@ -25,7 +26,7 @@ public class QrGenerator {
 
 
             log.info("Create image for email: " + email);
-            BufferedImage image = generateQRCode(BASE_URL + symetricEncryption.encrypt(email));
+            BufferedImage image = generateQRCode(BASE_URL + URLEncoder.encode(symetricEncryption.encrypt(email), "UTF-8"));
 
             String s = "";
             for (int y = 0; y < image.getHeight(); y++) {

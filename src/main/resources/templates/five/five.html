@@ -5,7 +5,7 @@
     <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
     <title>Mate-Challenge</title>
 
-    <script src="/jquery-3.1.0.min.js"></script>
+    <script src="/../lib/jquery-3.1.0.min.js"></script>
 
 </head>
 
@@ -207,14 +207,16 @@ View zu eins ist doch fair, oder?
 
         $("#sendButton").prop("disabled", true);
 
-        $.get("/five/cheesecake/{key}/solve", {s1: s1, s2: s2, s3: s3, s4: s4, s5: s5, s6: s6, s7: s7, s8: s8})
-                .done(function (data) {
-                    $("#result").html(data);
-                    $("#sendButton").prop("disabled", false);
-                    if (data.indexOf("COMPLETED") != -1) {
-                        alert(data);
-                    }
-                });
+        var key = "{{key}}";
+        var url = "/five/cheesecake/" + key + "/solve";
+        $.get(url, {s1: s1, s2: s2, s3: s3, s4: s4, s5: s5, s6: s6, s7: s7, s8: s8})
+            .done(function (data) {
+                $("#result").html(data);
+                $("#sendButton").prop("disabled", false);
+                if (data.indexOf("COMPLETED") != -1) {
+                    alert(data);
+                }
+            });
     }
 </script>
 </html>

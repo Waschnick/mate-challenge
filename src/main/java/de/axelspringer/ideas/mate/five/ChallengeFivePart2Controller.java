@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import spark.ModelAndView;
 import spark.Route;
 import spark.Spark;
+import spark.TemplateViewRoute;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,19 +27,21 @@ public class ChallengeFivePart2Controller {
 
 
     public static void init() {
-        Spark.get("five/cheesecake/:key", fiveRoute);
+        Spark.get("five/cheesecake/:key", fiveRoute, engine);
+        Spark.get("five/cheesecake/:key/", fiveRoute, engine);
         Spark.get("five/cheesecake/:key/solve", fiveSolveRoute);
+        Spark.get("five/cheesecake/:key/solve/", fiveSolveRoute);
 
     }
 
-    public static Route fiveRoute = (request, response) -> {
+    public static TemplateViewRoute fiveRoute = (request, response) -> {
         String key = request.params("key");
 
         log.info("Called last challenge with key: " + key);
         if (isValidKey(key)) {
             log.info("Key is valid!");
             Map<String, String> params = new HashMap<>();
-            params.put("key", key);
+            params.put("key", URLEncoder.encode(key, "UTF-8"));
             return new ModelAndView(params, "five/five.html");
         } else {
             return new ModelAndView(new HashMap(), "five/five_nope.html");
@@ -55,10 +59,10 @@ public class ChallengeFivePart2Controller {
         String s7 = request.params("s7");
         String s8 = request.params("s8");
 
-        log.info("Chessecake with key: " + key);
+        log.info("Solve chessecake with key: " + key);
 
         if (!isValidKey(key)) {
-            return new ModelAndView(new HashMap(), "five/five_nope.html");
+            return "Invalid KEY?!?!?!?!? Impossible!!!!!111";
         }
 
         String text = "" + s1 + ", " + s2 + ", " + s3 + ", " + s4 + ", " + s5 + ", " + s6 + ", " + s7 + ", " + s8;

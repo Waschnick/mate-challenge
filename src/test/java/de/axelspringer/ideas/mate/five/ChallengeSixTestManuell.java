@@ -210,7 +210,8 @@ public class ChallengeSixTestManuell {
     @Test
     public void rootPage_withPostAndNameAndEmail_shouldSendMail() throws Exception {
         Object body = URLEncoder.encode("name=Waschi&email=barriwaschi+130219734@gmail.com", "UTF-8");
-        String result = RestClient.post("http://localhost:8080/five/", String.class, body);
+//        String result = RestClient.post("http://localhost:8080/five/", String.class, body);
+        String result = RestClient.post("http://mate-challenge.herokuapp.com/five/", String.class, body);
         assertThat(result).isEqualTo("<pre>\n" +
                 "Challenge 3: Is it worth it? Let me work it.\n" +
                 "=============================================\n" +
