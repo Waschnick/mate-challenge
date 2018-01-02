@@ -2,7 +2,7 @@ package de.axelspringer.ideas.mate.six;
 
 public class NeverPay {
 
-    private int offset = 1;
+    public int offset = 1;
 
     public String encode(String data) {
         return encode(data.toCharArray());
