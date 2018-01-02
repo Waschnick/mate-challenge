@@ -27,6 +27,6 @@ public class SparkUtils {
 
     // Enable GZIP for all responses
     public static Filter addGzipHeader = (Request request, Response response) -> {
-        response.header("Content-Encoding", "gzip");
+        // response.header("Content-Encoding", "gzip");
     };
 }

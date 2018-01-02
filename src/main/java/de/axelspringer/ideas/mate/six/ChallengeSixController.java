@@ -9,6 +9,8 @@ import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.Random;
+
 public class ChallengeSixController {
 
 
@@ -17,6 +19,7 @@ public class ChallengeSixController {
 
     private static MailSender mailSender = new MailSender();
     private static QrGenerator qrGenerator = new QrGenerator();
+    private static Random random = new Random();
 
     public static void init() {
         Spark.get("/six/cheesecake/pin", pinRoute);
@@ -24,6 +27,7 @@ public class ChallengeSixController {
 
     public static Route pinRoute = (request, response) -> {
         String pin = request.queryParams("pin");
+        Thread.sleep(random.nextInt(50) + 20);
         return "123456".equalsIgnoreCase(pin);
     };
 

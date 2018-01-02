@@ -16,7 +16,6 @@ import java.io.IOException;
 public class RestClient {
 
     private static final Gson gson = new Gson();
-    private static final CloseableHttpClient httpclient = HttpClients.createDefault();
 
     public static <T> T get(String url, Class<T> responseType) {
         try {
@@ -45,6 +44,8 @@ public class RestClient {
     }
 
     private static <T> T execute(Class<T> responseType, HttpRequestBase httpPost) throws IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+
         try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
             HttpEntity entity = response.getEntity();
             String resultString = EntityUtils.toString(entity);
